@@ -36,9 +36,7 @@ const addTodo = async (req, res) => {
 const updateTodo = async (req, res) => {
   const id = req.params.id;
   try {
-    const updateTodo = await Todo.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updateTodo = await Todo.findByIdAndUpdate(id, req.body);
     res.json(updateTodo);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -49,11 +47,11 @@ const updateTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
   const id = req.params.id;
   try {
-    await Todo.findByIdAndDelete(id);
+   const response = await Todo.findByIdAndDelete(id);
+   return res.json(response)
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-
-module.exports = {addTodo, getTodo, updateTodo, deleteTodo}
+module.exports = { addTodo, getTodo, updateTodo, deleteTodo };
